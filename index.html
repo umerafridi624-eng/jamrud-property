@@ -64,6 +64,52 @@
     loading="lazy">
   </iframe>
 </div>
+<h2>زمین کی پیمائش کا کیلکولیٹر</h2>
+
+<div style="background:#f0f7ff;padding:20px;border-radius:12px;margin:15px 0;">
+  <label>رقبہ درج کریں:</label>
+  <input type="number" id="landValue" placeholder="مثلاً 1000" style="width:100%;padding:12px;margin:10px 0;box-sizing:border-box;">
+
+  <label>پیمائش منتخب کریں:</label>
+  <select id="landUnit" style="width:100%;padding:12px;margin:10px 0;">
+    <option value="sqft">مربع فٹ</option>
+    <option value="sqm">مربع میٹر</option>
+    <option value="marla">مرلہ</option>
+    <option value="kanal">کنال</option>
+  </select>
+
+  <button onclick="calculateLand()" style="background:#087b43;color:white;padding:12px 25px;border:0;border-radius:8px;cursor:pointer;">حساب کریں</button>
+
+  <div id="landResult" style="margin-top:20px;line-height:2;font-weight:bold;"></div>
+</div>
+
+<script>
+function calculateLand() {
+  const value = Number(document.getElementById('landValue').value);
+  const unit = document.getElementById('landUnit').value;
+  const result = document.getElementById('landResult');
+
+  if (!Number.isFinite(value) || value <= 0) {
+    result.innerHTML = "براہ کرم درست رقبہ درج کریں۔";
+    return;
+  }
+
+  let sqft = value;
+  if (unit === 'sqm') sqft = value * 10.7639;
+  if (unit === 'marla') sqft = value * 272.25;
+  if (unit === 'kanal') sqft = value * 5445;
+
+  const marla = sqft / 272.25;
+  const kanal = marla / 20;
+  const sqm = sqft / 10.7639;
+
+  result.innerHTML =
+    "مربع فٹ: " + sqft.toFixed(2) +
+    "<br>مربع میٹر: " + sqm.toFixed(2) +
+    "<br>مرلہ: " + marla.toFixed(2) +
+    "<br>کنال: " + kanal.toFixed(3);
+}
+</script>
 </body>
     
 </html>
